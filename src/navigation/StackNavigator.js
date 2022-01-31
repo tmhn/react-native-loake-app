@@ -10,17 +10,21 @@ import ProfileScreen from "../screens/Profile";
 const Stack = createStackNavigator();
 
 const screenOptionStyle = {
-  headerStyle: {
-    backgroundColor: "#9AC4F8",
+  // headerStyle: {
+  //   // backgroundColor: "#9AC4F8"
+  // },
+  headerTitleStyle: {
+    fontFamily: "PlayfairDisplay_400Regular",
+    fontSize: 22
   },
-  headerTintColor: "white",
-  headerBackTitle: "Back"
+  headerTintColor: "#0d3027",
+  headerBackTitle: "Back",
 };
 
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
 }
@@ -28,7 +32,7 @@ const HomeStackNavigator = () => {
 const CollectionStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
+      <Stack.Screen name="The Loake Collection" component={CollectionScreen} />
     </Stack.Navigator>
   );
 }
@@ -36,7 +40,7 @@ const CollectionStackNavigator = () => {
 const BasketStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="BasketScreen" component={BasketScreen} />
+      <Stack.Screen name="Basket" component={BasketScreen} />
     </Stack.Navigator>
   );
 }
@@ -44,7 +48,7 @@ const BasketStackNavigator = () => {
 const WishlistStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="WishlistScreen" component={WishlistScreen} />
+      <Stack.Screen name="Wishlist" component={WishlistScreen} />
     </Stack.Navigator>
   );
 }
@@ -52,7 +56,7 @@ const WishlistStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );
 }

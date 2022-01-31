@@ -23,38 +23,65 @@ const screenOptionStyle = {
   headerShown: false,
   tabBarActiveTintColor: PRIMARY,
   tabBarInactiveTintColor: '#9ca3af',
+  tabBarLabelStyle: {
+    fontFamily: "JosefinSans_400Regular",
+    fontSize: 11,
+  }
 };
 
-const tabIcon = (Icon, SecondaryIcon, focused) => focused ? <Icon style={{ height: 20, width: 20, color: PRIMARY }} /> : <SecondaryIcon style={{ height: 20, width: 20, color: '#9ca3af' }} />
+const tabs = [
+  {
+    name: "HomeScreen",
+    label: "Home",
+    component: HomeStackNavigator,
+    solidIcon: HomeSolidIcon,
+    outlineIcon: HomeOutlineIcon
+  },
+  {
+    name: "CollectionScreen",
+    label: "Collection",
+    component: CollectionStackNavigator,
+    solidIcon: CollectionSolidIcon,
+    outlineIcon: CollectionOutlineIcon
+  },
+  {
+    name: "BasketScreen",
+    label: "Basket",
+    component: BasketStackNavigator,
+    solidIcon: ShoppingBasketSolidIcon,
+    outlineIcon: ShoppingBasketOutlineIcon
+  },
+  {
+    name: "WishlistScreen",
+    label: "Wishlist",
+    component: WishlistStackNavigator,
+    solidIcon: HeartSolidIcon,
+    outlineIcon: HeartOutlineIcon
+  },
+  {
+    name: "AccountScreen",
+    label: "Account",
+    component: ProfileStackNavigator,
+    solidIcon: UserSolidIcon,
+    outlineIcon: UserOutlineIcon
+  }
+]
 
+const iconStyle = { height: 20, width: 20 }
+const tabIcon = (Icon, SecondaryIcon, focused) => focused ? <Icon style={[iconStyle, { color: PRIMARY }]} /> : <SecondaryIcon style={[iconStyle, { color: '#9ca3af' }]} />
 const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={screenOptionStyle}>
-      <Tab.Screen
-        name="Home"
-        component={HomeStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => tabIcon(HomeSolidIcon, HomeOutlineIcon, focused)}}
-      />
-      <Tab.Screen
-        name="Collection"
-        component={CollectionStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => tabIcon(CollectionSolidIcon, CollectionOutlineIcon, focused) }}
-      />
-      <Tab.Screen
-        name="Basket"
-        component={BasketStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => tabIcon(ShoppingBasketSolidIcon, ShoppingBasketOutlineIcon, focused) }}
-      />
-      <Tab.Screen
-        name="Wishlist"
-        component={WishlistStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => tabIcon(HeartSolidIcon, HeartOutlineIcon, focused) }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileStackNavigator}
-        options={{ tabBarIcon: ({ focused }) => tabIcon(UserSolidIcon, UserOutlineIcon, focused) }}
-      />
+    <Tab.Navigator screenOptions={screenOptionStyle} labeled={false}>
+      {
+        tabs.map((tab, index) => (
+          <Tab.Screen
+          key={`${index}-${tab.name}`}
+          name={tab.name}
+          component={tab.component}
+          options={{ tabBarLabel: tab.label, tabBarIcon: ({ focused }) => tabIcon(tab.solidIcon, tab.outlineIcon, focused) }}
+          />
+        ))
+      }
     </Tab.Navigator>
   )
 }

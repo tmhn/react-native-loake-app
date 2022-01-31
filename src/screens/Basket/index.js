@@ -1,12 +1,19 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 const BasketScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>Basket screen...</Text>
-    </View>
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    flex: 1
+  }
+})
 
 export default BasketScreen;
