@@ -1,46 +1,59 @@
-/*
-  To do:
+/* To do:
   - Split out to Product component
   - Look at rendering larger products at 7, 12 indexes...
 */
 
-import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
-import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { MAYFAIR, WESTMINSTER } from "../../constants/colors";
+import React, { useCallback, useMemo, useRef } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import ProductListItem from "./ProductListItem";
+import ProductFilters from "./ProductFilters";
+import { HOLLAND_PARK, WESTMINSTER } from "../../constants/colors";
+import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
 
+// Product spotlight indexes
 const spotlightIndexes = [6, 11];
+
 const ProductList = ({ data, navigation }) => {
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ['50%', '75%'], []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   return (
-    <ScrollView>
-      <View style={styles.productListWrapper}>
-        {
-          data.map((product, index) => {
-            console.log(product)
-            return (
-              <Pressable key={product.id} onPress={() => navigation.navigate("ProductScreen", { id: product.id })} style={spotlightIndexes.includes(index) ? styles.productSpotlight : styles.product}>
-                <Image source={{ uri: product.images[0] }} style={spotlightIndexes.includes(index) ? styles.productSpotlightImage : styles.productImage} />
-                <View style={styles.productInfo}>
-                  <View style={styles.productNamePriceContainer}>
-                    <Text style={styles.productName}>{product.name}</Text>
-                    <Text style={styles.productPrice}>£{product.price}</Text>
-                  </View>
-                  <View style={styles.productColourFit}>
-                    <Text style={styles.productColour}>{product.colour.productColour}</Text>
-                    <Text style={styles.productColour}>{product.fitting} / {product.sole} Sole</Text>
-                  </View>
-                </View>
-              </Pressable>
-            )
-          })
-        }
-      </View>
-    </ScrollView>
+    <BottomSheetModalProvider>
+      <ScrollView>
+        <View style={styles.container}>
+          <Pressable onPress={handlePresentModalPress} style={styles.filtersButton}>
+            <AdjustmentsIcon width={25} height={25} color={WESTMINSTER} />
+            <Text style={styles.filtersButtonText}>Filters</Text>
+          </Pressable>
+          <ProductFilters
+            bottomSheetModalRef={bottomSheetModalRef}
+            snapPoints={snapPoints}
+            handleSheetChanges={handleSheetChanges}
+            data={data}
+          />
+        </View>
+        <View style={styles.productListWrapper}>
+          {
+            data.map((product, index) => (
+              <ProductListItem
+                product={product}
+                navigation={navigation}
+                isProductSpotlight={spotlightIndexes.includes(index)}
+              />
+            ))
+          }
+        </View>
+      </ScrollView>
+    </BottomSheetModalProvider>
   )
 };
-
-const { width } = Dimensions.get('window');
-const cellDimensions = (width / 2) - 20
 
 const styles = StyleSheet.create({
   productListWrapper: {
@@ -50,52 +63,23 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  product: {
-    width: cellDimensions,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 30
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center'
   },
-  productSpotlight: {
-    width: width - 20,
-    marginBottom: 30
-  },
-  productImage: {
-    width: cellDimensions,
-    height: cellDimensions
-  },
-  productSpotlightImage: {
-    width: width - 20,
-    height: width - 20
-  },
-  productInfo: {
-    marginTop: 15
-  },
-  productNamePriceContainer: {
+  filtersButton: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 14
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: HOLLAND_PARK,
+    padding: 10
   },
-  productName: {
-    fontFamily: "PlayfairDisplay_400Regular",
-    color: WESTMINSTER
-  },
-  productPrice: {
-    color: MAYFAIR,
-    fontFamily: "JosefinSans_400Regular",
-    marginRight: 8
-  },
-  productColourFit: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  productColour: {
-    fontFamily: "JosefinSans_300Light",
-    color: WESTMINSTER,
-    fontSize: 10,
-    lineHeight: 18
+  filtersButtonText: {
+    fontFamily: "JosefinSans_500Medium",
+    marginLeft: 15
   }
 });
 

@@ -5,6 +5,7 @@ export const ALDWYCH = "#656565";
 export const TRAFALGAR = "#939393";
 export const ANGEL = "#A9A9A9";
 export const CHELSEA = "#F6F6F6";
+export const HOLLAND_PARK = "#0D30271A";
 export const WHITEHALL = "#FFFFFF";
 export const MAYFAIR = "#B88E38";
 export const ROYAL = "#C01717";
