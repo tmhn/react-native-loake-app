@@ -7,6 +7,11 @@ import BasketScreen from "../screens/Basket";
 import WishlistScreen from "../screens/Wishlist";
 import ProfileScreen from "../screens/Profile";
 
+import ProductScreen from "../screens/Product";
+
+import { WESTMINSTER } from "../constants/colors";
+import { ChevronLeftOutlineIcon } from "../components/Icons/ChevronLeftIcon";
+
 const Stack = createStackNavigator();
 
 const screenOptionStyle = {
@@ -14,11 +19,13 @@ const screenOptionStyle = {
   //   // backgroundColor: "#9AC4F8"
   // },
   headerTitleStyle: {
-    fontFamily: "PlayfairDisplay_400Regular",
-    fontSize: 22
+    fontFamily: "JosefinSans_700Bold",
+    textTransform: "uppercase",
+    fontSize: 14
   },
-  headerTintColor: "#0d3027",
-  headerBackTitle: "Back",
+  headerTintColor: WESTMINSTER,
+  headerBackTitleVisible: false,
+  headerBackImage: () => <ChevronLeftOutlineIcon width={25} height={25} color={WESTMINSTER} />
 };
 
 const HomeStackNavigator = () => {
@@ -33,6 +40,7 @@ const CollectionStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen name="The Loake Collection" component={CollectionScreen} />
+      <Stack.Screen name="ProductScreen" component={ProductScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -56,7 +64,7 @@ const WishlistStackNavigator = () => {
 const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="My Account" component={ProfileScreen} />
     </Stack.Navigator>
   );
 }

@@ -11,7 +11,7 @@ import {
 
 import { HomeOutlineIcon, HomeSolidIcon } from "../components/Icons/HomeIcon"
 import { CollectionOutlineIcon, CollectionSolidIcon } from "../components/Icons/CollectionIcon"
-import { ShoppingBasketOutlineIcon, ShoppingBasketSolidIcon } from "../components/Icons/ShoppingBagIcon"
+import { ShoppingBasketOutlineIcon, ShoppingBasketSolidIcon, ShoppingBasketOutlineWithBadgeIcon, ShoppingBasketSolidWithBadgeIcon } from "../components/Icons/ShoppingBagIcon"
 import { HeartOutlineIcon, HeartSolidIcon } from "../components/Icons/HeartIcon"
 import { UserOutlineIcon, UserSolidIcon } from "../components/Icons/UserIcon"
 
@@ -48,8 +48,8 @@ const tabs = [
     name: "BasketScreen",
     label: "Basket",
     component: BasketStackNavigator,
-    solidIcon: ShoppingBasketSolidIcon,
-    outlineIcon: ShoppingBasketOutlineIcon
+    solidIcon: ShoppingBasketSolidWithBadgeIcon,
+    outlineIcon: ShoppingBasketOutlineWithBadgeIcon
   },
   {
     name: "WishlistScreen",

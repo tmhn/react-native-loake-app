@@ -1,1 +1,11 @@
-export const PRIMARY = "#00523e";
+export const PRIMARY = "#00523E";
+export const WESTMINSTER = "#0D3027";
+export const PARLIAMENT = "#0F0E0E";
+export const ALDWYCH = "#656565";
+export const TRAFALGAR = "#939393";
+export const ANGEL = "#A9A9A9";
+export const CHELSEA = "#F6F6F6";
+export const WHITEHALL = "#FFFFFF";
+export const MAYFAIR = "#B88E38";
+export const ROYAL = "#C01717";
+export const KNIGHTSBRIDGE = "#541326";

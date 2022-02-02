@@ -1,5 +1,9 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
+import { Text, View } from "react-native";
+import IconBadge from "react-native-icon-badge";
+
+import { WESTMINSTER } from "../../constants/colors";
 
 export const ShoppingBasketOutlineIcon = (props) => (
   <Svg
@@ -19,6 +23,28 @@ export const ShoppingBasketOutlineIcon = (props) => (
   </Svg>
 );
 
+const val = 7;
+export const ShoppingBasketOutlineWithBadgeIcon = (props) => (
+  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
+    <IconBadge
+      MainElement={
+        <ShoppingBasketOutlineIcon width={20} height={20} color="#9ca3af" />
+      }
+      BadgeElement={
+        <Text style={{ color:'#FFFFFF', fontFamily: "JosefinSans_400Regular" }}>{val}</Text>
+      }
+      IconBadgeStyle={
+        {width: 5,
+        height: 18,
+        marginRight: -15,
+        marginTop: -5,
+        backgroundColor: WESTMINSTER}
+      }
+      Hidden={val === 0}
+      />
+  </View>
+)
+
 export const ShoppingBasketSolidIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,3 +60,24 @@ export const ShoppingBasketSolidIcon = (props) => (
     />
   </Svg>
 );
+
+export const ShoppingBasketSolidWithBadgeIcon = (props) => (
+  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',}}>
+    <IconBadge
+      MainElement={
+        <ShoppingBasketSolidIcon width={20} height={20} color={WESTMINSTER} />
+      }
+      BadgeElement={
+        <Text style={{ color:'#FFFFFF', fontFamily: "JosefinSans_400Regular" }}>{val}</Text>
+      }
+      IconBadgeStyle={
+        {width: 5,
+        height: 18,
+        marginRight: -15,
+        marginTop: -5,
+        backgroundColor: WESTMINSTER}
+      }
+      Hidden={val === 0}
+      />
+  </View>
+)

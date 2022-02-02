@@ -1,18 +1,53 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { MAYFAIR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 
 const BasketScreen = () => {
+  const [wishlist, setWishlist] = useState([]);
+
+  if (wishlist.length === 0) {
+    return (
+      <SafeAreaView style={styles.emptyWrapper}>
+        <Text style={styles.emptyWrapperText}>Your basket is currently empty.</Text>
+        <Pressable style={styles.returnToShopButton} onPress={() => {}}>
+          <Text style={styles.returnToShop}>Return to shop</Text>
+        </Pressable>
+      </SafeAreaView>
+    )
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.wrapper}>
       <Text>Basket screen...</Text>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    flex: 1
+  emptyWrapper: {
+    flex: 1,
+    backgroundColor: WHITEHALL,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  emptyWrapperText: {
+    fontFamily: "JosefinSans_300Light",
+    marginBottom: 30
+  },
+  returnToShopButton: {
+    borderWidth: 1,
+    borderColor: MAYFAIR,
+    padding: 20
+  },
+  returnToShop: {
+    fontFamily: "JosefinSans_400Regular",
+    color: WESTMINSTER,
+    textTransform: "uppercase"
+  },
+  wrapper: {
+    flex: 1,
+    backgroundColor: WHITEHALL,
   }
 })
 
