@@ -52,7 +52,7 @@ const ProductScreen = ({ navigation, route }) => {
             <Text style={styles.title}>{product.name}</Text>
           </View>
           <View>
-            <Text style={styles.colour}>Colour: <Text style={styles.colourName}>{product.colour.productColour}</Text></Text>
+            <Text style={styles.colour}>Colour: <Text style={styles.colourName}>{product.colourName}</Text></Text>
             <Text style={styles.fitting}>{product.fitting} / {product.sole} Sole</Text>
             <Text style={styles.price}>£ {""}<Text style={styles.priceValue}>{product.price}.00</Text></Text>
           </View>
@@ -121,7 +121,7 @@ const ProductScreen = ({ navigation, route }) => {
                   <StyleIcon height={35} width={35} color={MAYFAIR} />
                   <View style={{ flexDirection: "column", marginLeft: 10 }}>
                     <Text style={styles.extraDetailsTitle}>Style:</Text>
-                    <Text style={styles.extraDetailsValue}>{product.style.label}</Text>
+                    <Text style={styles.extraDetailsValue}>{product.style}</Text>
                   </View>
                 </View>
               </View>

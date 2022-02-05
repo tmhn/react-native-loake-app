@@ -16,7 +16,7 @@ const ProductListItem = (props) => {
           <Text style={styles.productPrice}>£{product.price}</Text>
         </View>
         <View style={styles.productColourFit}>
-          <Text style={styles.productColour}>{product.colour.productColour}</Text>
+          <Text style={styles.productColour}>{product.colourName}</Text>
           <Text style={styles.productColour}>{product.fitting} / {product.sole} Sole</Text>
         </View>
       </View>

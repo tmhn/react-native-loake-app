@@ -1,9 +1,12 @@
-[
+import { filter, forEach, keys, values } from "ramda";
+const data = [
   {
     "id": "001",
     "name": "Evans",
-    "colourFamily": "Brown",
-    "colourName": "Conker Brown",
+    "colour": {
+      "productColour": "Conker Brown",
+      "colourFamily": "Brown"
+    },
     "price": 270,
     "sizes": [
       "UK 6",
@@ -21,19 +24,18 @@
     "fitting": "F Fit",
     "last": "Bullet",
     "sole": "Leather",
-    "style": "Toe Cap",
-    "images": [
-      "https://www.loake.com/wp-content/uploads/2019/08/EVAM-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/EVAM-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/EVAM-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/sole-leather03-min.jpg"
-    ]
+    "style": {
+      "id": "toe-cap",
+      "label": "Toe Cap"
+    }
   },
   {
     "id": "002",
     "name": "Larch",
-    "colourFamily": "Black",
-    "colourName": "Black",
+    "colour": {
+      "productColour": "Black",
+      "colourFamily": "Black"
+    },
     "price": 195,
     "sizes": [
       "UK 6",
@@ -51,19 +53,18 @@
     "fitting": "F Fit",
     "last": "Ridge",
     "sole": "Leather & Rubber",
-    "style": "Toe Cap",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARB-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARB-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARB-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/sole-rubber-leather06-min.jpg"
-    ]
+    "style": {
+      "id": "toe-cap",
+      "label": "Toe Cap"
+    }
   },
   {
     "id": "003",
     "name": "Larch",
-    "colourFamily": "Brown",
-    "colourName": "Chestnut Brown",
+    "colour": {
+      "productColour": "Chestnut Brown",
+      "colourFamily": "Brown"
+    },
     "price": 195,
     "sizes": [
       "UK 6",
@@ -81,19 +82,18 @@
     "fitting": "F Fit",
     "last": "Ridge",
     "sole": "Leather & Rubber",
-    "style": "Toe Cap",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARCH-SIDE-min-1.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARCH-ANGLE-min-1.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/LARCH-TOP-min-1.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/sole-rubber-leather06-min.jpg"
-    ]
+    "style": {
+      "id": "toe-cap",
+      "label": "Toe Cap"
+    }
   },
   {
     "id": "004",
     "name": "Chester",
-    "colourFamily": "Tan",
-    "colourName": "Tan",
+    "colour": {
+      "productColour": "Tan",
+      "colourFamily": "Tan"
+    },
     "price": 275,
     "sizes": [
       "UK 8",
@@ -107,19 +107,18 @@
     "fitting": "F Fit",
     "last": "024",
     "sole": "Dainite, Rubber",
-    "style": "Brogue",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/CHET2R-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/CHET2R-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/CHET2R-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-dainite-brown-min.jpg"
-    ]
+    "style": {
+      "id": "brogue",
+      "label": "Brogue"
+    }
   },
   {
     "id": "005",
     "name": "Kruger",
-    "colourFamily": "Tan",
-    "colourName": "Tan",
+    "colour": {
+      "productColour": "Tan",
+      "colourFamily": "Tan"
+    },
     "price": 195,
     "sizes": [
       "UK 6",
@@ -137,19 +136,18 @@
     "fitting": "F Fit",
     "last": "Ridge",
     "sole": "Leather",
-    "style": "Brogue",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/KRUT-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/KRUT-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/KRUT-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/sole-rubber-leather07-min.jpg"
-    ]
+    "style": {
+      "id": "brogue",
+      "label": "Brogue"
+    }
   },
   {
     "id": "006",
     "name": "302",
-    "colourFamily": "Brown",
-    "colourName": "Brown Suede",
+    "colour": {
+      "productColour": "Brown Suede",
+      "colourFamily": "Brown"
+    },
     "price": 165,
     "sizes": [
       "UK 6",
@@ -167,19 +165,18 @@
     "fitting": "G Fit",
     "last": "3625",
     "sole": "Rubber",
-    "style": "Brogue",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2021/03/302SRG-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2021/03/302SRG-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2021/03/302SRG-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-loake-gigolo-brown-min.jpg"
-    ]
+    "style": {
+      "id": "brogue",
+      "label": "Brogue"
+    }
   },
   {
     "id": "007",
     "name": "Hepworth",
-    "colourFamily": "Brown",
-    "colourName": "Chestnut Brown",
+    "colour": {
+      "productColour": "Chestnut Brown",
+      "colourFamily": "Brown"
+    },
     "price": 195,
     "sizes": [
       "UK 6",
@@ -196,19 +193,18 @@
     "fitting": "F Fit",
     "last": "Artist",
     "sole": "Leather & Rubber",
-    "style": "Brogue",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/HEPCH-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/HEPCH-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/HEPCH-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/sole-artists-min.jpg"
-    ]
+    "style": {
+      "id": "brogue",
+      "label": "Brogue"
+    }
   },
   {
     "id": "008",
     "name": "Lymington",
-    "colourFamily": "Brown",
-    "colourName": "Dark Brown",
+    "colour": {
+      "productColour": "Dark Brown",
+      "colourFamily": "Brown"
+    },
     "price": 125,
     "sizes": [
       "UK 6",
@@ -225,19 +221,18 @@
     "fitting": "F Fit",
     "last": "Boat",
     "sole": "Rubber",
-    "style": "Boat Shoe",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/LYMCHN-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/LYMCHN-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/LYMCHN-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-moccasinrubber-cream-min.jpg"
-    ]
+    "style": {
+      "id": "boat",
+      "label": "Boat Shoe"
+    }
   },
   {
     "id": "009",
     "name": "522",
-    "colourFamily": "Brown",
-    "colourName": "Brown",
+    "colour": {
+      "productColour": "Brown",
+      "colourFamily": "Brown"
+    },
     "price": 125,
     "sizes": [
       "UK 6",
@@ -254,19 +249,18 @@
     "fitting": "F Fit",
     "last": "Boat",
     "sole": "Rubber",
-    "style": "Boat Shoe",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/522CH-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/522CH-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/522CH-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-commando-cream-min.jpg"
-    ]
+    "style": {
+      "id": "boat",
+      "label": "Boat Shoe"
+    }
   },
   {
     "id": "010",
     "name": "Foley",
-    "colourFamily": "Black",
-    "colourName": "Black",
+    "colour": {
+      "productColour": "Black",
+      "colourFamily": "Black"
+    },
     "price": 195,
     "sizes": [
       "UK 6",
@@ -283,19 +277,18 @@
     "fitting": "F Fit",
     "last": "Ridge",
     "sole": "Leather",
-    "style": "Semi Brogue",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/FOLB-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/FOLB-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/FOLB-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/sole-rubber-leather05-min.jpg"
-    ]
+    "style": {
+      "id": "semi-brogue",
+      "label": "Semi Brogue"
+    }
   },
   {
     "id": "011",
     "name": "Parliament",
-    "colourFamily": "Black",
-    "colourName": "Onyx Black",
+    "colour": {
+      "productColour": "Onyx Black",
+      "colourFamily": "Black"
+    },
     "price": 399,
     "sizes": [
       "UK 6",
@@ -312,19 +305,18 @@
     "fitting": "F Fit",
     "last": "River",
     "sole": "Leather",
-    "style": "Wholecut",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/EGPARB-SIDE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/EGPARB-ANGLE-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/EGPARB-TOP-min.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-exportgrade-min.jpg"
-    ]
+    "style": {
+      "id": "wholecut",
+      "label": "Wholecut"
+    }
   },
   {
     "id": "012",
     "name": "Chatsworth",
-    "colourFamily": "Brown",
-    "colourName": "Brown Waxed Suede",
+    "colour": {
+      "productColour": "Brown Waxed Suede",
+      "colourFamily": "Brown"
+    },
     "price": 265,
     "sizes": [
       "UK 6",
@@ -341,12 +333,37 @@
     "fitting": "G Fit",
     "last": "Jockey",
     "sole": "Dainite, Rubber",
-    "style": "Wholecut",
-    "images": [
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/CHACHW-SIDE-min-900x1035.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/CHACHW-ANGLE-min-900x1035.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/CHACHW-TOP-min-900x1035.jpg",
-      "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2019/08/sole-dainite-brown-min-900x1035.jpg"
-    ]
+    "style": {
+      "id": "wholecut",
+      "label": "Wholecut"
+    }
   }
 ]
+
+
+const filters = [
+  { last: "Ridge"},
+  { fitting: "F Fit" },
+//  { sole: "Leather & Rubber" }
+]
+
+
+filter(product => {
+  // Satisfy all filterItems equate to true...
+
+  const filterBooleanValues = map(filterItem => {
+    const filterItemKey = keys(filterItem)[0];
+    const filterItemValue = values(filterItem)[0];
+
+    return product[filterItemKey] === filterItemValue;
+  }, filters)
+
+  return filterBooleanValues.every(item => !!item)
+}, data);
+
+
+
+
+
+
+

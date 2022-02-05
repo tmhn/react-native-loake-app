@@ -75,10 +75,10 @@ const BottomTabNavigator = () => {
       {
         tabs.map((tab, index) => (
           <Tab.Screen
-          key={`${index}-${tab.name}`}
-          name={tab.name}
-          component={tab.component}
-          options={{ tabBarLabel: tab.label, tabBarIcon: ({ focused }) => tabIcon(tab.solidIcon, tab.outlineIcon, focused) }}
+            key={`${index}-${tab.name}`}
+            name={tab.name}
+            component={tab.component}
+            options={{ tabBarLabel: tab.label, tabBarIcon: ({ focused }) => tabIcon(tab.solidIcon, tab.outlineIcon, focused) }}
           />
         ))
       }
