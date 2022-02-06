@@ -3,7 +3,7 @@
   - Look at rendering larger products at 7, 12 indexes...
 */
 
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import ProductListItem from "./ProductListItem";
@@ -16,7 +16,6 @@ const spotlightIndexes = [6, 11];
 
 const ProductList = ({ data, navigation }) => {
   const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ['50%', '75%'], []);
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -33,16 +32,16 @@ const ProductList = ({ data, navigation }) => {
             <Text style={styles.filtersButtonText}>Filters</Text>
           </Pressable>
           <ProductFilters
-            bottomSheetModalRef={bottomSheetModalRef}
-            snapPoints={snapPoints}
-            handleSheetChanges={handleSheetChanges}
             data={data}
+            bottomSheetModalRef={bottomSheetModalRef}
+            handleSheetChanges={handleSheetChanges}
           />
         </View>
         <View style={styles.productListWrapper}>
           {
             data.map((product, index) => (
               <ProductListItem
+                key={index}
                 product={product}
                 navigation={navigation}
                 isProductSpotlight={spotlightIndexes.includes(index)}

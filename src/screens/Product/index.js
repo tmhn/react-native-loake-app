@@ -52,7 +52,7 @@ const ProductScreen = ({ navigation, route }) => {
             <Text style={styles.title}>{product.name}</Text>
           </View>
           <View>
-            <Text style={styles.colour}>Colour: <Text style={styles.colourName}>{product.colourName}</Text></Text>
+            <Text style={styles.colour}>Colour: <Text style={styles.colourName}>{product.colour}</Text></Text>
             <Text style={styles.fitting}>{product.fitting} / {product.sole} Sole</Text>
             <Text style={styles.price}>£ {""}<Text style={styles.priceValue}>{product.price}.00</Text></Text>
           </View>

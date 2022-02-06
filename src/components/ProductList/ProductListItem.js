@@ -8,7 +8,11 @@ const cellDimensions = (width / 2) - 20;
 const ProductListItem = (props) => {
   const { product, navigation, isProductSpotlight } = props;
   return (
-    <Pressable key={product.id} onPress={() => navigation.navigate("ProductScreen", { id: product.id })} style={isProductSpotlight ? styles.productSpotlight : styles.product}>
+    <Pressable
+      key={product.id}
+      onPress={() => navigation.navigate("ProductScreen", { id: product.id })}
+      style={isProductSpotlight ? styles.productSpotlight : styles.product}
+    >
       <Image source={{ uri: product.images[0] }} style={isProductSpotlight ? styles.productSpotlightImage : styles.productImage} />
       <View style={styles.productInfo}>
         <View style={styles.productNamePriceContainer}>
@@ -16,7 +20,7 @@ const ProductListItem = (props) => {
           <Text style={styles.productPrice}>£{product.price}</Text>
         </View>
         <View style={styles.productColourFit}>
-          <Text style={styles.productColour}>{product.colourName}</Text>
+          <Text style={styles.productColour}>{product.colour}</Text>
           <Text style={styles.productColour}>{product.fitting} / {product.sole} Sole</Text>
         </View>
       </View>
