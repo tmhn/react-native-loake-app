@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { keys, head, map, values } from "ramda";
@@ -15,20 +15,44 @@ const filterCategories = [{ label: "style", value: "style", activeFilter: "" }, 
 const ProductFilters = (props) => {
   const [activeFilters, setActiveFilters] = useState(filterCategories)
   const snapPoints = useMemo(() => ['50%', '75%'], []);
+
+  useEffect(() => {
+    console.log("filters have changed")
+  }, [activeFilters])
+
   const { bottomSheetModalRef, handleSheetChanges, data } = props;
 
   console.log(activeFilters)
 
   const logSelector = (categoryNameValue, attributeValue) => {
-    const newFiltersArray = activeFilters.map(filterItem => {
 
+    const newFiltersArray = activeFilters.map(filterItem => {
       if (filterItem.value === categoryNameValue) {
-        filterItem["activeFilter"] = attributeValue;
+
+        console.log("----------------")
+        console.log(filterItem)
+        console.log(`filterVal: ${filterItem["activeFilter"]}`)
+        console.log(`filterValBoolean: ${!!filterItem["activeFilter"]}`)
+        console.log(`attributeValue: ${attributeValue}`)
+
+        // No current filter is set for the current filterItem, or toggling to different attribute
+        // So set it to be the attributeValue
+        if (!filterItem["activeFilter"] || filterItem["activeFilter"] !== attributeValue) {
+          console.log(`is false...`)
+          filterItem["activeFilter"] = attributeValue;
+          return filterItem;
+        }
+
+        // handle toggling attribute "off"
+        if (filterItem["activeFilter"] === attributeValue) {
+          console.log(`is equal...`)
+          filterItem["activeFilter"] = "";
+          return filterItem;
+        }
       }
 
       return filterItem
-    })
-
+    });
     setActiveFilters(newFiltersArray);
   }
 
@@ -54,10 +78,7 @@ const ProductFilters = (props) => {
             let activeItem = false;
 
             if (!!activeFilters.find(elem => elem.activeFilter === filterItemName)) {
-              console.log(`filterCategoryName - ${filterCategoryName} - active`)
               activeItem = true;
-            } else {
-              console.log(`filterCategoryName - ${filterCategoryName} - inactive`)
             }
 
             return (
@@ -94,53 +115,6 @@ const ProductFilters = (props) => {
               <FilterCategory key={`${index}-${filterCategory.label}`} filterCategory={filterCategory} />
             ))
           }
-
-          <View style={styles.filterItem}>
-            <Text style={styles.filterTitle}>style</Text>
-            <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={ANGEL} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: ANGEL, marginLeft: 15 }}>Toe Cap</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>5</Text>
-              </View>
-
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={WESTMINSTER} fill={WESTMINSTER} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: WESTMINSTER, marginLeft: 15 }}>Brogue</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>10</Text>
-              </View>
-
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={ANGEL} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: ANGEL, marginLeft: 15 }}>Semi Brogue</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>2</Text>
-              </View>
-
-            </View>
-          </View>
-
-          <View style={styles.filterItem}>
-            <Text style={styles.filterTitle}>colour</Text>
-            <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={ANGEL} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: ANGEL, marginLeft: 15 }}>Black</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>5</Text>
-              </View>
-
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={ANGEL} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: ANGEL, marginLeft: 15 }}>Greens</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>2</Text>
-              </View>
-
-              <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}>
-                <CircleIcon width={14} height={14} color={WESTMINSTER} fill={WESTMINSTER} />
-                <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: WESTMINSTER, marginLeft: 15 }}>Browns</Text>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>10</Text>
-              </View>
-
-            </View></View>
         </ScrollView>
       </View>
     </BottomSheetModal>
