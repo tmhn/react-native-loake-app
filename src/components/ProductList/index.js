@@ -1,13 +1,10 @@
-/* To do:
-  - Split out to Product component
-  - Look at rendering larger products at 7, 12 indexes...
-*/
-
 import React, { useCallback, useRef } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
 import ProductListItem from "./ProductListItem";
 import ProductFilters from "./ProductFilters";
+
 import { HOLLAND_PARK, WESTMINSTER } from "../../constants/colors";
 import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
 

@@ -26,26 +26,17 @@ const ProductFilters = (props) => {
 
   const logSelector = (categoryNameValue, attributeValue) => {
 
-    const newFiltersArray = activeFilters.map(filterItem => {
+    const updatedCategoryFilters = activeFilters.map(filterItem => {
       if (filterItem.value === categoryNameValue) {
-
-        console.log("----------------")
-        console.log(filterItem)
-        console.log(`filterVal: ${filterItem["activeFilter"]}`)
-        console.log(`filterValBoolean: ${!!filterItem["activeFilter"]}`)
-        console.log(`attributeValue: ${attributeValue}`)
-
         // No current filter is set for the current filterItem, or toggling to different attribute
         // So set it to be the attributeValue
         if (!filterItem["activeFilter"] || filterItem["activeFilter"] !== attributeValue) {
-          console.log(`is false...`)
           filterItem["activeFilter"] = attributeValue;
           return filterItem;
         }
 
-        // handle toggling attribute "off"
+        // Values are the same, so handle toggling attribute "off"
         if (filterItem["activeFilter"] === attributeValue) {
-          console.log(`is equal...`)
           filterItem["activeFilter"] = "";
           return filterItem;
         }
@@ -53,7 +44,7 @@ const ProductFilters = (props) => {
 
       return filterItem
     });
-    setActiveFilters(newFiltersArray);
+    setActiveFilters(updatedCategoryFilters);
   }
 
   const FilterCategory = ({ filterCategory }) => {

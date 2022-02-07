@@ -2,11 +2,10 @@ import React from "react";
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { MAYFAIR, WESTMINSTER } from "../../constants/colors";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 const cellDimensions = (width / 2) - 20;
 
-const ProductListItem = (props) => {
-  const { product, navigation, isProductSpotlight } = props;
+const ProductListItem = ({ product, navigation, isProductSpotlight }) => {
   return (
     <Pressable
       key={product.id}
