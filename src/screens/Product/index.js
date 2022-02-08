@@ -3,7 +3,7 @@ import { Dimensions, Image, Text, Pressable, StyleSheet, View } from "react-nati
 import { AppleStyle } from 'react-native-scrollable-navigation-bar';
 import { map } from "ramda";
 import { getProductById } from "../../data/utils";
-import { CHELSEA, ALDWYCH, MAYFAIR, PARLIAMENT, TRAFALGAR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
+import { CHELSEA, ALDWYCH, MAYFAIR, TRAFALGAR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { ChevronLeftOutlineIcon } from "../../components/Icons/ChevronLeftIcon";
 
 import { LastIcon } from "../../components/Icons/LastIcon";
@@ -18,9 +18,11 @@ const AttributeItem = ({ attributeName, attributeValue, Icon }) => (
   <View style={styles.extraDetailsItem}>
     <View style={styles.extraDetailsItemRow}>
       <Icon height={35} width={35} color={MAYFAIR} />
-      <View style={{ flexDirection: "column", marginLeft: 10 }}>
+      <View style={{ display: "flex", flexWrap: "wrap", flexDirection: "column", marginLeft: 10, flex: 1 }}>
         <Text style={styles.extraDetailsTitle}>{attributeName}:</Text>
-        <Text style={styles.extraDetailsValue}>{attributeValue}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.extraDetailsValue}>{attributeValue}</Text>
+        </View>
       </View>
     </View>
   </View>
@@ -230,7 +232,8 @@ const styles = StyleSheet.create({
   },
   extraDetailsItem: {
     width: (width / 2) - 20,
-    paddingLeft: 15
+    paddingLeft: 10,
+    paddingRight: 5
   },
   extraDetailsItemRow: {
     display: "flex",
@@ -244,10 +247,10 @@ const styles = StyleSheet.create({
   },
   extraDetailsValue: {
     fontFamily: "JosefinSans_400Regular",
-    color: PARLIAMENT,
+    color: WESTMINSTER,
     fontSize: 16,
     marginTop: 2,
-    flexWrap: "wrap"
+    flex: 1
   }
 });
 
