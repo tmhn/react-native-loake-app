@@ -4,7 +4,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { keys, head, map, values } from "ramda";
 
 import { getProductAttributesCount, filterCategories, transformAttributesList, prettifyCategoryName } from "../../data/functions";
-import { ANGEL, HOLLAND_PARK, MAYFAIR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
+import { ANGEL, HOLLAND_PARK, MAYFAIR, PRIMARY, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { CircleIcon } from "../Icons/CircleIcon";
 import { CrossIcon } from "../Icons/CrossIcon";
 import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
@@ -27,8 +27,6 @@ const ProductFilters = ({ handleFilterChanges }) => {
   }, [activeFilters]);
 
   const filterItemHandler = (categoryNameValue, attributeValue) => {
-    console.log(categoryNameValue)
-    console.log(attributeValue)
     const updatedCategoryFilters = activeFilters.map(filterItem => {
       if (filterItem.value === categoryNameValue) {
         // No current filter is set for the current filterItem, or toggling to different attribute
@@ -98,15 +96,11 @@ const ProductFilters = ({ handleFilterChanges }) => {
         {
           transformAttributesList(activeFilters) && map(item => {
             const categoryName = head(keys(item));
-            const prettifiedCategoryName = prettifyCategoryName(categoryName);
             const prettifiedAttributeName = head(values(item));
             return (
-            <Pressable onPress={() => filterItemHandler(categoryName, prettifiedAttributeName)} style={{ borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, flexDirection: "row", alignItems: "center" }}>
-              <View style={{ display: "flex", flxDirection: "column", marginRight: 10 }}>
-                <Text style={{ fontFamily: "JosefinSans_400Regular", textTransform: "capitalize" }}>{prettifiedCategoryName}:</Text>
-                <Text style={{ fontFamily: "JosefinSans_300Light" }}>{""}{prettifiedAttributeName}</Text>
-              </View>
-              <CrossIcon width={14} height={14} color={ANGEL} />
+            <Pressable onPress={() => filterItemHandler(categoryName, prettifiedAttributeName)} style={{ display: "flex", flxDirection: "column", borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, flexDirection: "row", alignItems: "center", backgroundColor: PRIMARY }}>
+              <Text style={{ fontFamily: "JosefinSans_400Regular", marginTop: 5, color: WHITEHALL, marginRight: 10 }}>{""}{prettifiedAttributeName}</Text>
+              <CrossIcon width={14} height={14} color={WHITEHALL} />
             </Pressable>
           )}, transformAttributesList(activeFilters))
         }

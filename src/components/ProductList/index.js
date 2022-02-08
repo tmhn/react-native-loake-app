@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import ProductListItem from "./ProductListItem";
-import ProductFilters from "./ProductFilters";
+import ProductFilters from "../ProductFilters";
 
 import data from "../../data/products.json";
 import { useProductFilter } from "../../data/functions";

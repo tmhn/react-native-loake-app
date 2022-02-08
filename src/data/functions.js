@@ -20,7 +20,7 @@ export const transformAttributesList = (attributesList) => {
   const list = map(attribute => ({ [attribute.value]: attribute.activeFilter }), attributesList)
   const res = filter(item => head(values(item)), list)
   return res;
-}
+};
 
 export const filtersActive = (filters) => transformAttributesList(filters).length > 0;
 
@@ -34,12 +34,10 @@ const filterProducts = (attributesList, prodData) => {
 
     return all(equals(T()))(filterBooleanValues)
   }, prodData);
-}
-
-
+};
 
 export const useProductFilter = (productFilters) => {
   const transformedFiltersList = transformAttributesList(productFilters);
   const res = filterProducts(transformedFiltersList, data);
   return res;
-}
+};
