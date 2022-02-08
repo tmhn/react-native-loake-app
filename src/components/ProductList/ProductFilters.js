@@ -6,6 +6,7 @@ import { keys, head, map, values } from "ramda";
 import { getProductAttributesCount, filterCategories, transformAttributesList, prettifyCategoryName } from "../../data/functions";
 import { ANGEL, HOLLAND_PARK, MAYFAIR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { CircleIcon } from "../Icons/CircleIcon";
+import { CrossIcon } from "../Icons/CrossIcon";
 import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
 
 const { width } = Dimensions.get('window');
@@ -17,19 +18,17 @@ const ProductFilters = ({ handleFilterChanges }) => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const bottomSheetModalRef = useRef(null);
-  const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   const snapPoints = useMemo(() => ['50%', '75%'], []);
+  const bottomSheetModalRef = useRef(null);
+  const handleSheetChanges = useCallback((index) => console.log('handleSheetChanges', index), []);
 
   useEffect(() => {
     handleFilterChanges(activeFilters);
   }, [activeFilters]);
 
-  const logSelector = (categoryNameValue, attributeValue) => {
-
+  const filterItemHandler = (categoryNameValue, attributeValue) => {
+    console.log(categoryNameValue)
+    console.log(attributeValue)
     const updatedCategoryFilters = activeFilters.map(filterItem => {
       if (filterItem.value === categoryNameValue) {
         // No current filter is set for the current filterItem, or toggling to different attribute
@@ -74,11 +73,13 @@ const ProductFilters = ({ handleFilterChanges }) => {
             return (
             <Pressable
               key={`${index}-${filterItemName}`}
-              onPress={() => logSelector(filterCategoryName, filterItemName)}
+              onPress={() => filterItemHandler(filterCategoryName, filterItemName)}
               style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}
             >
               <CircleIcon width={14} height={14} color={activeItem ? WESTMINSTER : ANGEL} fill={activeItem ? WESTMINSTER : WHITEHALL} />
-              <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: activeItem ? WESTMINSTER : ANGEL, marginLeft: 15 }}>{filterItemName}</Text>
+              <Text style={{ fontFamily: "PlayfairDisplay_400Regular", fontSize: 14, color: activeItem ? WESTMINSTER : ANGEL, marginLeft: 15 }}>
+                {filterItemName}
+              </Text>
               <Text style={{ fontFamily: "JosefinSans_400Regular", color: MAYFAIR, fontSize: 12, marginLeft: 8 }}>{filterItemCount}</Text>
             </Pressable>
           )}, data)
@@ -95,12 +96,19 @@ const ProductFilters = ({ handleFilterChanges }) => {
       </Pressable>
       <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {
-          transformAttributesList(activeFilters) && map(item => (
-            <View style={{ borderWidth: 1, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, }}>
-              <Text style={{ fontFamily: "JosefinSans_400Regular", textTransform: "capitalize" }}>{prettifyCategoryName(head(keys(item)))}:</Text>
-              <Text style={{ fontFamily: "JosefinSans_300Light" }}>{""}{head(values(item))}</Text>
-            </View>
-          ), transformAttributesList(activeFilters))
+          transformAttributesList(activeFilters) && map(item => {
+            const categoryName = head(keys(item));
+            const prettifiedCategoryName = prettifyCategoryName(categoryName);
+            const prettifiedAttributeName = head(values(item));
+            return (
+            <Pressable onPress={() => filterItemHandler(categoryName, prettifiedAttributeName)} style={{ borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, flexDirection: "row", alignItems: "center" }}>
+              <View style={{ display: "flex", flxDirection: "column", marginRight: 10 }}>
+                <Text style={{ fontFamily: "JosefinSans_400Regular", textTransform: "capitalize" }}>{prettifiedCategoryName}:</Text>
+                <Text style={{ fontFamily: "JosefinSans_300Light" }}>{""}{prettifiedAttributeName}</Text>
+              </View>
+              <CrossIcon width={14} height={14} color={ANGEL} />
+            </Pressable>
+          )}, transformAttributesList(activeFilters))
         }
       </View>
       <BottomSheetModal

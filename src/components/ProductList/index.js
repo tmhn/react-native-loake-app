@@ -19,8 +19,8 @@ const ProductList = ({ navigation }) => {
   const renderProductListItem = () => {
     if (productData.length === 0) {
       return (
-        <View style={{ marginTop: 50, display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ textAlign: "center", fontFamily: "JosefinSans_300Light" }}>No products...</Text>
+        <View style={styles.emptyProductWrapper}>
+          <Text style={styles.emptyProductText}>No products were found matching your selection.</Text>
         </View>
       )
     }
@@ -63,6 +63,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     justifyContent: 'center'
+  },
+  emptyProductWrapper: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 100,
+  },
+  emptyProductText: {
+    textAlign: "center",
+    fontFamily: "JosefinSans_300Light"
   }
 });
 
