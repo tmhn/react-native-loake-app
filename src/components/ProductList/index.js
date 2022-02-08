@@ -1,50 +1,50 @@
-import React, { useCallback, useRef } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-
 import ProductListItem from "./ProductListItem";
 import ProductFilters from "./ProductFilters";
 
-import { HOLLAND_PARK, WESTMINSTER } from "../../constants/colors";
-import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
+import data from "../../data/products.json";
+import { useProductFilter } from "../../data/functions";
+const productSpotlightIndexes = [6, 11];
 
-// Product spotlight indexes
-const spotlightIndexes = [6, 11];
+const ProductList = ({ navigation }) => {
+  const [productData, setProductData] = useState(data);
 
-const ProductList = ({ data, navigation }) => {
-  const bottomSheetModalRef = useRef(null);
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  const handleFilterChanges = (filters) => {
+    const updatedProducts = useProductFilter(filters);
+    setProductData(updatedProducts);
+  }
+
+  const renderProductListItem = () => {
+    if (productData.length === 0) {
+      return (
+        <View style={{ marginTop: 50, display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ textAlign: "center", fontFamily: "JosefinSans_300Light" }}>No products...</Text>
+        </View>
+      )
+    }
+
+    return (
+      productData.map((product, index) => (
+        <ProductListItem
+          key={index}
+          product={product}
+          navigation={navigation}
+          isProductSpotlight={productSpotlightIndexes.includes(index)}
+        />
+      ))
+    )
+  }
 
   return (
     <BottomSheetModalProvider>
       <ScrollView>
         <View style={styles.container}>
-          <Pressable onPress={handlePresentModalPress} style={styles.filtersButton}>
-            <AdjustmentsIcon width={25} height={25} color={WESTMINSTER} />
-            <Text style={styles.filtersButtonText}>Filters</Text>
-          </Pressable>
-          <ProductFilters
-            data={data}
-            bottomSheetModalRef={bottomSheetModalRef}
-            handleSheetChanges={handleSheetChanges}
-          />
+          <ProductFilters handleFilterChanges={handleFilterChanges} />
         </View>
         <View style={styles.productListWrapper}>
-          {
-            data.map((product, index) => (
-              <ProductListItem
-                key={index}
-                product={product}
-                navigation={navigation}
-                isProductSpotlight={spotlightIndexes.includes(index)}
-              />
-            ))
-          }
+          {renderProductListItem()}
         </View>
       </ScrollView>
     </BottomSheetModalProvider>
@@ -63,19 +63,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     justifyContent: 'center'
-  },
-  filtersButton: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: HOLLAND_PARK,
-    padding: 10
-  },
-  filtersButtonText: {
-    fontFamily: "JosefinSans_500Medium",
-    marginLeft: 15
   }
 });
 

@@ -1,28 +1,32 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { keys, head, map, values } from "ramda";
 
-import { getProductAttributesCount } from "../../data/functions";
+import { getProductAttributesCount, filterCategories, transformAttributesList, prettifyCategoryName } from "../../data/functions";
 import { ANGEL, HOLLAND_PARK, MAYFAIR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { CircleIcon } from "../Icons/CircleIcon";
+import { AdjustmentsIcon } from "../Icons/AdjustmentsIcon";
 
 const { width } = Dimensions.get('window');
 const cellDimensions = (width / 2) - 20;
-const filterCategories = [{ label: "style", value: "style", activeFilter: "" }, { label: "colour", value: "colourFamily", activeFilter: "" }, { label: "fitting", value: "fitting", activeFilter: "" }, { label: "sole", value: "sole", activeFilter: "" }, { label: "last", value: "last", activeFilter: "" }];
 
-
-const ProductFilters = (props) => {
+const ProductFilters = ({ handleFilterChanges }) => {
   const [activeFilters, setActiveFilters] = useState(filterCategories)
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const bottomSheetModalRef = useRef(null);
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   const snapPoints = useMemo(() => ['50%', '75%'], []);
 
   useEffect(() => {
-    console.log("filters have changed")
-  }, [activeFilters])
-
-  const { bottomSheetModalRef, handleSheetChanges, data } = props;
-
-  console.log(activeFilters)
+    handleFilterChanges(activeFilters);
+  }, [activeFilters]);
 
   const logSelector = (categoryNameValue, attributeValue) => {
 
@@ -65,16 +69,11 @@ const ProductFilters = (props) => {
           map((item, index) => {
             const filterItemName = head(keys(item));
             const filterItemCount = head(values(item))
-
-            let activeItem = false;
-
-            if (!!activeFilters.find(elem => elem.activeFilter === filterItemName)) {
-              activeItem = true;
-            }
+            const activeItem = activeFilters.find(elem => elem.activeFilter === filterItemName);
 
             return (
             <Pressable
-              key={filterItemName}
+              key={`${index}-${filterItemName}`}
               onPress={() => logSelector(filterCategoryName, filterItemName)}
               style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20, width: cellDimensions }}
             >
@@ -89,27 +88,43 @@ const ProductFilters = (props) => {
   }
 
   return (
-    <BottomSheetModal
-      ref={bottomSheetModalRef}
-      index={1}
-      snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-      style={styles.wrapper}
-    >
-      <View style={styles.contentContainer}>
-        <View style={styles.headingContainer}>
-          <Text style={styles.headingTitle}>Filters</Text>
-        </View>
-        <ScrollView style={styles.scrollWrapper}>
-          {
-            activeFilters.map((filterCategory, index) => (
-              <FilterCategory key={`${index}-${filterCategory.label}`} filterCategory={filterCategory} />
-            ))
-          }
-        </ScrollView>
+    <View>
+      <Pressable onPress={handlePresentModalPress} style={styles.filtersButton}>
+        <AdjustmentsIcon width={25} height={25} color={WESTMINSTER} />
+        <Text style={styles.filtersButtonText}>Filters</Text>
+      </Pressable>
+      <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+        {
+          transformAttributesList(activeFilters) && map(item => (
+            <View style={{ borderWidth: 1, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, }}>
+              <Text style={{ fontFamily: "JosefinSans_400Regular", textTransform: "capitalize" }}>{prettifyCategoryName(head(keys(item)))}:</Text>
+              <Text style={{ fontFamily: "JosefinSans_300Light" }}>{""}{head(values(item))}</Text>
+            </View>
+          ), transformAttributesList(activeFilters))
+        }
       </View>
-    </BottomSheetModal>
-  )
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        style={styles.wrapper}
+      >
+        <View style={styles.contentContainer}>
+          <View style={styles.headingContainer}>
+            <Text style={styles.headingTitle}>Filters</Text>
+          </View>
+          <ScrollView style={styles.scrollWrapper}>
+            {
+              activeFilters.map((filterCategory, index) => (
+                <FilterCategory key={`${index}-${filterCategory.label}`} filterCategory={filterCategory} />
+              ))
+            }
+          </ScrollView>
+        </View>
+      </BottomSheetModal>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -138,6 +153,19 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginTop: 10,
     paddingBottom: 20
+  },
+  filtersButton: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: HOLLAND_PARK,
+    padding: 10
+  },
+  filtersButtonText: {
+    fontFamily: "JosefinSans_500Medium",
+    marginLeft: 15
   },
   filterTitle: {
     fontFamily: "JosefinSans_600SemiBold",
