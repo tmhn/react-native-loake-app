@@ -56,18 +56,18 @@ const ProductFilters = ({ handleFilterChanges }) => {
     setActiveFilters(updatedCategoryFilters);
   }
 
-  const FilterCategory = ({ filterCategory }) => {
+  const FilterCategorySections = ({ filterCategory }) => {
     const data = getProductAttributesCount(filterCategory.value);
     const filterCategoryTitle = filterCategory.label;
     return (
       <View style={styles.filterItem}>
         <Text style={styles.filterTitle}>{filterCategoryTitle}</Text>
-        <FilterItem filterCategoryName={filterCategory.value} data={data} />
+        <FilterTags filterCategoryName={filterCategory.value} data={data} />
       </View>
     )
   }
 
-  const FilterItem = ({ filterCategoryName, data }) => {
+  const FilterTags = ({ filterCategoryName, data }) => {
     return (
       <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {
@@ -140,7 +140,7 @@ const ProductFilters = ({ handleFilterChanges }) => {
           <ScrollView style={styles.scrollWrapper}>
             {
               activeFilters.map((filterCategory, index) => (
-                <FilterCategory key={`${index}-${filterCategory.label}`} filterCategory={filterCategory} />
+                <FilterCategorySections key={`${index}-${filterCategory.label}`} filterCategory={filterCategory} />
               ))
             }
           </ScrollView>

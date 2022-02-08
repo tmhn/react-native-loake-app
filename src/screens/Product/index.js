@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Dimensions, Image, Text, Pressable, StyleSheet, View } from "react-native";
 import { AppleStyle } from 'react-native-scrollable-navigation-bar';
+import { map } from "ramda";
 import { getProductById } from "../../data/utils";
 import { CHELSEA, ALDWYCH, MAYFAIR, PARLIAMENT, TRAFALGAR, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { ChevronLeftOutlineIcon } from "../../components/Icons/ChevronLeftIcon";
@@ -12,6 +13,18 @@ import { StyleIcon } from "../../components/Icons/StyleIcon";
 import { CrossIcon } from "../../components/Icons/CrossIcon";
 
 const { width } = Dimensions.get('screen');
+
+const AttributeItem = ({ attributeName, attributeValue, Icon }) => (
+  <View style={styles.extraDetailsItem}>
+    <View style={styles.extraDetailsItemRow}>
+      <Icon height={35} width={35} color={MAYFAIR} />
+      <View style={{ flexDirection: "column", marginLeft: 10 }}>
+        <Text style={styles.extraDetailsTitle}>{attributeName}:</Text>
+        <Text style={styles.extraDetailsValue}>{attributeValue}</Text>
+      </View>
+    </View>
+  </View>
+)
 
 const ProductScreen = ({ navigation, route }) => {
   const product = getProductById(route.params.id);
@@ -42,10 +55,9 @@ const ProductScreen = ({ navigation, route }) => {
         ]}
       >
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <Image source={{ uri: product.images[0]}} style={{ height: width / 4, width: width / 4}} />
-          <Image source={{ uri: product.images[1]}} style={{ height: width / 4, width: width / 4}} />
-          <Image source={{ uri: product.images[2]}} style={{ height: width / 4, width: width / 4}} />
-          <Image source={{ uri: product.images[3]}} style={{ height: width / 4, width: width / 4}} />
+          {
+            map((image, index) => <Image key={`${index}-${image}`} source={{ uri: image }} style={{ height: width / 4, width: width / 4}} />, product.images)
+          }
         </View>
         <View style={styles.productInfoContainer}>
           <View>
@@ -82,52 +94,15 @@ const ProductScreen = ({ navigation, route }) => {
 
           <View style={styles.extraDetailsContainer}>
             <View style={styles.extraDetailsRow}>
-
-              <View style={styles.extraDetailsItem}>
-                <View style={styles.extraDetailsItemRow}>
-                  <FittingIcon height={35} width={35} color={MAYFAIR} />
-                  <View style={{ flexDirection: "column", marginLeft: 10 }}>
-                    <Text style={styles.extraDetailsTitle}>Fitting:</Text>
-                    <Text style={styles.extraDetailsValue}>{product.fitting}</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.extraDetailsItem}>
-                <View style={styles.extraDetailsItemRow}>
-                  <LastIcon height={35} width={35} color={MAYFAIR} />
-                  <View style={{ flexDirection: "column", marginLeft: 10 }}>
-                    <Text style={styles.extraDetailsTitle}>Last:</Text>
-                    <Text style={styles.extraDetailsValue}>{product.last}</Text>
-                  </View>
-                </View>
-              </View>
-
+              <AttributeItem attributeName={"Fitting"} attributeValue={product.fitting} Icon={FittingIcon} />
+              <AttributeItem attributeName={"Last"} attributeValue={product.last} Icon={LastIcon} />
             </View>
-
             <View style={styles.extraDetailsRow}>
-              <View style={styles.extraDetailsItem}>
-                <View style={styles.extraDetailsItemRow}>
-                  <SoleIcon height={35} width={35} color={MAYFAIR} />
-                  <View style={{ flexDirection: "column", marginLeft: 10 }}>
-                    <Text style={styles.extraDetailsTitle}>Sole:</Text>
-                    <Text style={styles.extraDetailsValue}>{product.sole}</Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.extraDetailsItem}>
-                <View style={styles.extraDetailsItemRow}>
-                  <StyleIcon height={35} width={35} color={MAYFAIR} />
-                  <View style={{ flexDirection: "column", marginLeft: 10 }}>
-                    <Text style={styles.extraDetailsTitle}>Style:</Text>
-                    <Text style={styles.extraDetailsValue}>{product.style}</Text>
-                  </View>
-                </View>
-              </View>
-
+              <AttributeItem attributeName={"Sole"} attributeValue={product.sole} Icon={SoleIcon} />
+              <AttributeItem attributeName={"Style"} attributeValue={product.style} Icon={StyleIcon} />
             </View>
           </View>
+
         </View>
       </AppleStyle>
     </View>
