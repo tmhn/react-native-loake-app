@@ -1,10 +1,9 @@
 import { all, countBy, equals, filter, head, keys, map, mapObjIndexed, T, trim, values } from "ramda";
 import data from "./products.json";
-
-export const filterCategories = [{ label: "style", value: "style", activeFilter: "" }, { label: "colour", value: "colourFamily", activeFilter: "" }, { label: "fitting", value: "fitting", activeFilter: "" }, { label: "sole", value: "sole", activeFilter: "" }, { label: "last", value: "last", activeFilter: "" }];
+import { FILTER_CATEGORIES } from "../constants/filters";
 
 export const prettifyCategoryName = (name) => {
-  const { label } = filterCategories.find(elem => elem.value === name);
+  const { label } = FILTER_CATEGORIES.find(elem => elem.value === name);
   return label;
 }
 

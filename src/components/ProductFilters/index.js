@@ -3,7 +3,8 @@ import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from "react
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { keys, head, map, values } from "ramda";
 
-import { getProductAttributesCount, filterCategories, transformAttributesList, prettifyCategoryName } from "../../data/functions";
+import { getProductAttributesCount, transformAttributesList } from "../../data/functions";
+import { FILTER_CATEGORIES } from "../../constants/filters";
 import { ANGEL, HOLLAND_PARK, MAYFAIR, PRIMARY, WESTMINSTER, WHITEHALL } from "../../constants/colors";
 import { CircleIcon } from "../Icons/CircleIcon";
 import { CrossIcon } from "../Icons/CrossIcon";
@@ -13,7 +14,9 @@ const { width } = Dimensions.get('window');
 const cellDimensions = (width / 2) - 20;
 
 const ProductFilters = ({ handleFilterChanges }) => {
-  const [activeFilters, setActiveFilters] = useState(filterCategories)
+  let filterCategories = Object.freeze(FILTER_CATEGORIES);
+  const [activeFilters, setActiveFilters] = useState(filterCategories);
+
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -25,6 +28,11 @@ const ProductFilters = ({ handleFilterChanges }) => {
   useEffect(() => {
     handleFilterChanges(activeFilters);
   }, [activeFilters]);
+
+  const resetFilters = () => {
+    const refreshedFilters = activeFilters.map(filterItem => filterItem["activeFilter"] = "" );
+    setActiveFilters(refreshedFilters);
+  }
 
   const filterItemHandler = (categoryNameValue, attributeValue) => {
     const updatedCategoryFilters = activeFilters.map(filterItem => {
@@ -92,19 +100,32 @@ const ProductFilters = ({ handleFilterChanges }) => {
         <AdjustmentsIcon width={25} height={25} color={WESTMINSTER} />
         <Text style={styles.filtersButtonText}>Filters</Text>
       </Pressable>
-      <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-        {
-          transformAttributesList(activeFilters) && map(item => {
-            const categoryName = head(keys(item));
-            const prettifiedAttributeName = head(values(item));
-            return (
-            <Pressable onPress={() => filterItemHandler(categoryName, prettifiedAttributeName)} style={{ display: "flex", flxDirection: "column", borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 10, marginTop: 10, flexDirection: "row", alignItems: "center", backgroundColor: PRIMARY }}>
-              <Text style={{ fontFamily: "JosefinSans_400Regular", marginTop: 5, color: WHITEHALL, marginRight: 10 }}>{""}{prettifiedAttributeName}</Text>
-              <CrossIcon width={14} height={14} color={WHITEHALL} />
-            </Pressable>
-          )}, transformAttributesList(activeFilters))
-        }
-      </View>
+      {
+        transformAttributesList(activeFilters).length > 0 && (
+          <View style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+              <Pressable
+                onPress={() => resetFilters()}
+                style={{ display: "flex", borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 5, marginTop: 10, flexDirection: "row", alignItems: "center", backgroundColor: PRIMARY }}
+              >
+                <Text style={{ fontFamily: "JosefinSans_400Regular", color: WHITEHALL, marginRight: 10, fontSize: 10 }}>Clear filters</Text>
+                <CrossIcon width={14} height={14} color={WHITEHALL} />
+              </Pressable>
+            { map((item, index) => {
+              const categoryName = head(keys(item));
+              const prettifiedAttributeName = head(values(item));
+              return (
+              <Pressable
+                key={`${categoryName}-${index}`}
+                onPress={() => filterItemHandler(categoryName, prettifiedAttributeName)}
+                style={{ display: "flex", borderWidth: 1, borderRadius: 4, borderColor: WESTMINSTER, marginRight: 10, padding: 5, marginTop: 10, flexDirection: "row", alignItems: "center" }}
+              >
+                <Text style={{ fontFamily: "JosefinSans_400Regular", color: PRIMARY, marginRight: 10, fontSize: 10 }}>{prettifiedAttributeName}</Text>
+                <CrossIcon width={14} height={14} color={PRIMARY} />
+              </Pressable>
+            )}, transformAttributesList(activeFilters))
+          }
+        </View>
+      )}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
