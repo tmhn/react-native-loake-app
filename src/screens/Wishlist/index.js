@@ -8,12 +8,10 @@ const WishlistScreen = () => {
   if (wishlist.length === 0) {
     return (
       <SafeAreaView style={styles.emptyWrapper}>
-        <View>
-          <Text style={styles.emptyWrapperText}>Your wishlist is currently empty.</Text>
-          <Pressable style={styles.returnToShopButton} onPress={() => {}}>
-            <Text style={styles.returnToShop}>Return to shop</Text>
-          </Pressable>
-        </View>
+        <Text style={styles.emptyWrapperText}>Your wishlist is currently empty.</Text>
+        <Pressable style={styles.returnToShopButton} onPress={() => {}}>
+          <Text style={styles.returnToShop}>Return to shop</Text>
+        </Pressable>
       </SafeAreaView>
     )
   }
