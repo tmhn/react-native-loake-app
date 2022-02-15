@@ -1,11 +1,28 @@
 import React from "react";
-import { Dimensions, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ROYAL, WHITEHALL } from "../../constants/colors";
+import { Dimensions, ImageBackground, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { CHELSEA, ROYAL, WHITEHALL } from "../../constants/colors";
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <View style={{ marginBottom: 10 }}>
+          <ImageBackground source={{ uri: "https://www.loake.com/wp-content/uploads/2021/11/homebox-boots-hiker-min.jpg" }} resizeMode="cover" style={{ height: 500, width: "100%", justifyContent: "center" }}>
+            <Text style={{ fontFamily: "PlayfairDisplay_400Regular_Italic", color: "white", textAlign: "center", fontSize: 22 }}>Country Influences</Text>
+            <Text style={{ fontFamily: "PlayfairDisplay_400Regular", color: "white", marginTop: 30, textAlign: "center", fontSize: 40 }}>Autumn / Winter</Text>
+            <Text style={{ fontFamily: "PlayfairDisplay_400Regular", color: "white", textAlign: "center", fontSize: 40 }}>Boot Collection</Text>
+          </ImageBackground>
+        </View>
+        <View id="carousel">
+          <ImageBackground source={{ uri: "https://11e9802pkzi11wwxyd1byxlm-wpengine.netdna-ssl.com/wp-content/uploads/2021/09/homebox_boots_nirchn-min.jpg?id=122966" }} resizeMode="cover" style={{ height: 350, width: "100%", justifyContent: "center" }}>
+            <Text style={{ fontFamily: "PlayfairDisplay_400Regular_Italic", color: "white", fontSize: 22, paddingLeft: 16 }}>Year round excellence</Text>
+            <Text style={{ fontFamily: "PlayfairDisplay_400Regular", color: "white", marginTop: 30, fontSize: 40, paddingLeft: 16 }}>Boots</Text>
+            <View style={{ borderWidth: 1, borderColor: "white", backgroundColor: "#fff3", marginLeft: 16, width: 200 }}>
+              <Text style={{ paddingVertical: 20, paddingHorizontal: 10, color: "white", fontFamily: "JosefinSans_600SemiBold"  }}>Shop our boot collection</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={{ marginVertical: 30, borderBottomWidth: 1, borderBottomColor: CHELSEA }} />
         <View style={styles.topbox}>
           <View style={styles.topboxHeaderContainer}>
             <Text style={styles.topboxTitle}>New Year, New Shoes</Text>
